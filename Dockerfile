@@ -7,7 +7,6 @@ ADD requirements.txt ./
 RUN pip install --no-cache-dir -r ./requirements.txt
  
 ENV WAMP_PORT=3100
-ENV WAMP_URL=ws://127.0.0.1:$WAMP_PORT
 ENV WAMP_AUTHID=backend
 ENV WAMP_REALM=default
 ENV PROMETHEUS_EXPORTER_PORT=9123

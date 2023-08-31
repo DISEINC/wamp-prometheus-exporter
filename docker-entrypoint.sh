@@ -6,6 +6,8 @@ else
   exit 1
 fi
 
+export WAMP_URL=ws://127.0.0.1:$WAMP_PORT
+
 crossbar start --cbdir .crossbar --loglevel info &
 P1=$!
 python ./exporter.py &
