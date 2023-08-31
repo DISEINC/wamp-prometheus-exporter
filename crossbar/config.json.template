@@ -1,0 +1,74 @@
+{
+    "version": 2,
+    "controller": {},
+    "workers": [
+        {
+            "type": "router",
+            "options": {
+                "pythonpath": [
+                    ".."
+                ]
+            },
+            "realms": [
+                {
+                    "name": "default",
+                    "roles": [
+                        {
+                            "name": "backend",
+                            "permissions": [
+                                {
+                                    "uri": "",
+                                    "match": "prefix",
+                                    "allow": {
+                                        "call": true,
+                                        "register": true,
+                                        "publish": true,
+                                        "subscribe": true
+                                    },
+                                    "disclose": {
+                                        "caller": false,
+                                        "publisher": false
+                                    },
+                                    "cache": true
+                                }
+                            ]
+                        },
+                        {
+                            "name": "user",
+                            "authorizer": "com.dise.ds.authorize"
+                        },
+                        {
+                            "name": "session_callback",
+                           "authorizer": "com.dise.ds.authorize"
+                        }
+                    ]
+                }
+            ],
+            "transports": [
+                {
+                    "type": "websocket",
+                    "endpoint": {
+                        "type": "tcp",
+                        "port": $WAMP_PORT
+                    },
+                    "debug": false,
+                    "auth": {
+                        "ticket": {
+                            "type": "dynamic",
+                            "authenticator": "com.dise.ds.authenticate"
+                        },
+                        "wampcra": {
+                            "type": "static",
+                            "users": {
+                               "backend": {
+                                    "secret": "$WAMP_SECRET",
+                                    "role": "backend"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
