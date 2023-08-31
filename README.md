@@ -1,4 +1,7 @@
-# WAMP Prometheus Exporter
+# Crossbar + Prometheus exporter
+Combines a crossbar image and a Prometheus exporter
+
+## WAMP Prometheus Exporter
 
 Uses WAMP meta events and meta procedures to collect and expose metrics.
 
@@ -26,13 +29,21 @@ active_subscription_count{realm="myapp",router_url="ws://localhost:9101/ws",uri=
 
 ## Install and deploy
 
-Build a docker image:
+Build and push docker image:
 
 ```
-docker build -t wamp-prometheus-exporter .
-docker run -d --restart=always -e WAMP_URL=ws://example.com:9101/ws -e WAMP_REALM=myapp -e WAMP_PRINCIPAL=exporter -e WAMP_TICKET=changeme -p 9123:9123 wamp-prometheus-exporter
+docker build -t wamp .
+docker tag wamp registry.dise.local:5000/wamp
+docker push registry.dise.local:5000/wamp
+```
+
+Pull and use docker image:
+
+```
+docker pull registry.dise.local:5000/wamp
+docker run -d -v $pwd/crossbar:/node/.crossbar -e WAMP_SECRET=E0087005-3B4C-48B7-AA33-C209430893C9 -e WAMP_PORT=3100 -e PROMETHEUS_EXPORTER_PORT=9123 -p 3100:3100 -p 9123:9123 registry.dise.local:5000/wamp
 ```
 
 ## Metrics
 
-Metrics will be made available on port 9123.
+Metrics will be made available on port specified by the environment variable ``PROMETHEUS_EXPORTER_PORT`` (default 9123)
