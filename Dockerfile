@@ -1,14 +1,19 @@
-FROM python:3.7-alpine
-ADD requirements.txt ./
-RUN apk add --no-cache --virtual=build-dependencies g++ && \
- pip install --no-cache-dir -r requirements.txt && \
- apk del --purge \
-    build-dependencies && \
- rm -rf \
-    /root/.cache \
-    /tmp/*
+FROM crossbario/crossbar:pypy-slim-amd64-23.1.2
 
-EXPOSE 9123
-ENV PYTHONUNBUFFERED=1
+RUN apt-get update && \ 
+    apt-get install -y --no-install-recommends gettext-base
+
+ADD requirements.txt ./
+RUN pip install --no-cache-dir -r ./requirements.txt
+ 
+ENV WAMP_PORT=3100
+ENV WAMP_URL=ws://127.0.0.1:$WAMP_PORT
+ENV WAMP_AUTHID=backend
+ENV WAMP_REALM=default
+ENV PROMETHEUS_EXPORTER_PORT=9123
+
 COPY exporter.py ./
-CMD ["python", "exporter.py"]
+COPY docker-entrypoint.sh ./
+RUN chmod 777 ./docker-entrypoint.sh
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
