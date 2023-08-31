@@ -6,6 +6,7 @@ RUN apt-get update && \
 ADD requirements.txt ./
 RUN pip install --no-cache-dir -r ./requirements.txt
 
+ENV WAMP_PORT=8080
 ENV WAMP_URL=ws://127.0.0.1:8080
 ENV WAMP_AUTHID=backend
 ENV WAMP_REALM=default

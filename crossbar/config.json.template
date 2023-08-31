@@ -49,7 +49,7 @@
                     "type": "websocket",
                     "endpoint": {
                         "type": "tcp",
-                        "port": 8080
+                        "port": $WAMP_PORT
                     },
                     "debug": false,
                     "auth": {
