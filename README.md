@@ -41,9 +41,9 @@ Pull and use docker image:
 
 ```
 docker pull registry.dise.local:5000/wamp
-docker run -d -v $pwd/crossbar:/node/.crossbar -e WAMP_SECRET=E0087005-3B4C-48B7-AA33-C209430893C9 -e WAMP_PORT=3100 -e PROMETHEUS_EXPORTER_PORT=9123 -p 3100:3100 -p 9123:9123 registry.dise.local:5000/wamp
+docker run -d -v $pwd/crossbar:/node/.crossbar -e WAMP_SECRET=E0087005-3B4C-48B7-AA33-C209430893C9 -e WAMP_PORT=3100 -p 3101:3101 -p 9121:9123 registry.dise.local:5000/wamp
 ```
 
 ## Metrics
 
-Metrics will be made available on port specified by the environment variable ``PROMETHEUS_EXPORTER_PORT`` (default 9123)
+Metrics will be made available on port 9123 in container, may be forwarded by a port directive for docker run, i.e. ``-p 9121:9123``

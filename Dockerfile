@@ -9,7 +9,6 @@ RUN pip install --no-cache-dir -r ./requirements.txt
 ENV WAMP_PORT=3100
 ENV WAMP_AUTHID=backend
 ENV WAMP_REALM=default
-ENV PROMETHEUS_EXPORTER_PORT=9123
 
 COPY exporter.py ./
 COPY docker-entrypoint.sh ./
