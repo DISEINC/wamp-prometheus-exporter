@@ -41,8 +41,11 @@ Pull and use docker image:
 
 ```
 docker pull registry.dise.local:5000/wamp
-docker run -d -v $pwd/crossbar:/node/.crossbar -e WAMP_SECRET=E0087005-3B4C-48B7-AA33-C209430893C9 -e WAMP_PORT=3100 -p 3101:3101 -p 9121:9123 registry.dise.local:5000/wamp
+docker run --name wamp-dev -d -v /var/local/crossbar/dev:/node/.crossbar -e WAMP_SECRET=E0087005-3B4C-48B7-AA33-C209430893C9 -p 3101:8080 -p 9121:9123 registry.dise.local:5000/wamp
 ```
+
+## WAMP port 
+Crossbar will run on port 8080 in container, may be forwarded by a port directive in docker run, i.e. ``-p 3101:8080``
 
 ## Metrics
 
